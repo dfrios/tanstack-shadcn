@@ -20,12 +20,13 @@ export default [
 
   // Base configs
   js.configs.recommended,
-  tseslint.configs.recommended,
+  ...tseslint.configs.recommended,
 
   // Prettier config
   {
     plugins: {
       prettier: prettier,
+      'jsx-a11y': jsxA11y,
     },
     rules: {
       // disable warnings, since prettier should format on save
@@ -45,6 +46,6 @@ export default [
     },
   },
   {
-    ignores: ['dist/**', '**/*.d.ts', '.github/', '.agents/', '.qwen/'],
+    ignores: ['dist/**', '**/*.d.ts', '.github/', '.agents/', '.qwen/', 'eslint.config.js'],
   },
 ];
