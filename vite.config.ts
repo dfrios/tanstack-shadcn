@@ -1,14 +1,28 @@
-import { defineConfig } from 'vite'
-import { devtools } from '@tanstack/devtools-vite'
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import { defineConfig } from 'vite';
+import { devtools } from '@tanstack/devtools-vite';
 
-import viteReact from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { tanstackStart } from '@tanstack/react-start/plugin/vite';
+
+import viteReact from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import svgr from 'vite-plugin-svgr';
+
+const srcDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'src');
 
 const config = defineConfig({
-  resolve: { tsconfigPaths: true },
-  plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact()],
-})
+  server: {
+    host: '0.0.0.0',
+    // port: 3000,
+  },
+  resolve: {
+    alias: {
+      '@': srcDir,
+    },
+  },
+  plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact(), svgr()],
+});
 
-export default config
+export default config;
