@@ -10,19 +10,33 @@ import viteReact from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 
+import { cloudflare } from '@cloudflare/vite-plugin';
+
 const srcDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'src');
 
 const config = defineConfig({
   server: {
     host: '0.0.0.0',
     // port: 3000,
+    allowedHosts: ['ryo.innflow.local'],
   },
   resolve: {
     alias: {
       '@': srcDir,
     },
   },
-  plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact(), svgr()],
+  plugins: [
+    devtools(),
+    tailwindcss(),
+    tanstackStart(),
+    viteReact(),
+    svgr(),
+    cloudflare({
+      viteEnvironment: {
+        name: 'ssr',
+      },
+    }),
+  ],
 });
 
 export default config;
